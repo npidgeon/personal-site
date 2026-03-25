@@ -37,30 +37,68 @@ import Layout from '../layouts/Layout.astro';
         <section id="about" class="min-h-[80vh] flex items-center relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-[#5865F2]/5 to-transparent z-0"></div>
           <div class="container mx-auto px-6 lg:px-12 relative z-10 py-20">
-            <div class="max-w-3xl">
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2B2D31] border border-white/5 mb-6 shadow-sm">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                </span>
-                <span class="text-sm font-medium text-white/70">Employed, but open to connections and opportunities</span>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 justify-between">
+              
+              <!-- Left side text -->
+              <div class="max-w-2xl lg:max-w-md xl:max-w-xl flex-1">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2B2D31] border border-white/5 mb-6 shadow-sm">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                  </span>
+                  <span class="text-sm font-medium text-white/70">Employed, but open to connections and opportunities</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight mb-6 leading-tight">
+                  Crafting digital <br/>
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5865F2] to-[#00E5FF]">experiences.</span>
+                </h1>
+                <p class="text-xl text-white/60 mb-10 leading-relaxed">
+                  I'm an aspiring software engineer with a background in IT and Salesforce administration, specializing in building exceptional, high-quality websites and applications that are both beautiful and robust.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                  <a href="#projects" class="btn bg-[#5865F2] hover:bg-[#4752C4] border-none text-white px-8 rounded-lg shadow-lg shadow-[#5865F2]/25 transition-all hover:-translate-y-0.5">
+                    View Work
+                  </a>
+                  <a href="https://github.com/npidgeon" target="_blank" class="btn bg-[#2B2D31] hover:bg-[#1E1F22] border border-white/10 text-white rounded-lg transition-all hover:-translate-y-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                    GitHub
+                  </a>
+                </div>
               </div>
-              <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 leading-tight">
-                Crafting digital <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5865F2] to-[#00E5FF]">experiences.</span>
-              </h1>
-              <p class="text-xl text-white/60 mb-10 max-w-2xl leading-relaxed">
-                I'm an aspiring software engineer with a background in IT and Salesforce administration, specializing in building exceptional, high-quality websites and applications that are both beautiful and robust.
-              </p>
-              <div class="flex flex-wrap gap-4">
-                <a href="#projects" class="btn bg-[#5865F2] hover:bg-[#4752C4] border-none text-white px-8 rounded-lg shadow-lg shadow-[#5865F2]/25 transition-all hover:-translate-y-0.5">
-                  View Work
-                </a>
-                <a href="https://github.com/npidgeon" target="_blank" class="btn bg-[#2B2D31] hover:bg-[#1E1F22] border border-white/10 text-white rounded-lg transition-all hover:-translate-y-0.5">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-                  GitHub
-                </a>
+
+              <!-- Right side terminal -->
+              <div id="terminal-wrapper" class="w-full max-w-2xl lg:max-w-xl xl:max-w-2xl flex-none mt-12 lg:mt-0 relative group z-20" style="transform: translate(0px,0px);">
+                <!-- Need z-20 to ensure it's draggable over other things if we pull it around -->
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-[#5865F2] to-[#00E5FF] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" id="terminal-glow"></div>
+                <div id="terminal-window" class="relative w-full rounded-xl bg-[#09090b] border border-[#27272a] shadow-2xl overflow-hidden font-mono text-sm flex flex-col h-[460px] hover:shadow-[#5865F2]/20 transition-shadow">
+                  
+                  <!-- Terminal Header -->
+                  <div id="terminal-header" class="bg-[#18181b] px-4 py-3 flex items-center border-b border-[#27272a] cursor-grab active:cursor-grabbing select-none relative z-30">
+                    <div class="flex gap-2 relative z-10">
+                      <div class="w-3 h-3 rounded-full bg-[#ef4444] hover:bg-red-400 cursor-pointer" id="btn-close" title="Close"></div>
+                      <div class="w-3 h-3 rounded-full bg-[#eab308] hover:bg-yellow-400 cursor-pointer" id="btn-minimize" title="Minimize"></div>
+                      <div class="w-3 h-3 rounded-full bg-[#22c55e] hover:bg-green-400 cursor-pointer" id="btn-maximize" title="Maximize"></div>
+                    </div>
+                    <div class="absolute inset-x-0 text-center text-xs text-[#a1a1aa] font-sans font-medium pointer-events-none">nick@ubuntu: ~</div>
+                  </div>
+                  
+                  <!-- Terminal Content Area -->
+                  <div id="terminal-content-area" class="flex flex-col flex-grow overflow-hidden relative z-20">
+                    <!-- Terminal Body -->
+                    <div class="p-4 flex-grow overflow-y-auto text-[#d4d4d8] flex flex-col gap-1.5 scrollbar-thin scrollbar-thumb-[#3f3f46] scrollbar-track-transparent terminal-output whitespace-pre-wrap" id="terminal-output">
+                      <!-- Populated by JS -->
+                    </div>
+                    
+                    <!-- Terminal Input -->
+                    <div class="px-4 pb-4 pt-2 flex items-center gap-2 text-[#d4d4d8] bg-[#09090b] shrink-0" id="terminal-input-line">
+                      <span class="text-[#22c55e] font-bold">nick@ubuntu</span>:<span class="text-[#3b82f6] font-bold" id="prompt-path">~</span>$ 
+                      <input type="text" id="terminal-input" class="bg-transparent border-none outline-none flex-grow text-white font-mono placeholder:text-[#3f3f46]" autocomplete="off" spellcheck="false" autofocus />
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </section>
@@ -244,6 +282,325 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </div>
 </Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('terminal-input') as HTMLInputElement;
+    const output = document.getElementById('terminal-output');
+    const terminalContainer = document.querySelector('.terminal-output');
+    
+    // Terminal Elements
+    const terminalWrapper = document.getElementById('terminal-wrapper');
+    const terminalWindow = document.getElementById('terminal-window');
+    const terminalHeader = document.getElementById('terminal-header');
+    const terminalContentArea = document.getElementById('terminal-content-area');
+    const btnMinimize = document.getElementById('btn-minimize');
+    const btnMaximize = document.getElementById('btn-maximize');
+
+    if (!input || !output || !terminalWindow || !terminalHeader || !terminalWrapper) return;
+
+    // --- Drag and Drop Logic ---
+    let isDragging = false;
+    let initialX = 0, initialY = 0;
+    let xOffset = 0, yOffset = 0;
+
+    terminalHeader.addEventListener('pointerdown', dragStart);
+
+    function dragStart(e: PointerEvent) {
+      // Don't drag if clicking buttons
+      if ((e.target as HTMLElement).id.startsWith('btn-')) return;
+      
+      initialX = e.clientX - xOffset;
+      initialY = e.clientY - yOffset;
+      
+      isDragging = true;
+      window.addEventListener('pointermove', drag);
+      window.addEventListener('pointerup', dragEnd);
+      terminalHeader?.classList.add('cursor-grabbing');
+    }
+
+    function drag(e: PointerEvent) {
+      if (isDragging) {
+        e.preventDefault();
+        xOffset = e.clientX - initialX;
+        yOffset = e.clientY - initialY;
+        terminalWrapper!.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+      }
+    }
+
+    function dragEnd(e: PointerEvent) {
+      initialX = xOffset;
+      initialY = yOffset;
+      isDragging = false;
+      window.removeEventListener('pointermove', drag);
+      window.removeEventListener('pointerup', dragEnd);
+      terminalHeader?.classList.remove('cursor-grabbing');
+    }
+
+    // --- Minimize / Maximize Logic ---
+    let isMinimized = false;
+    
+    function setMinimizedState(minimized: boolean) {
+      isMinimized = minimized;
+      if (isMinimized) {
+        terminalContentArea!.style.display = 'none';
+        terminalWindow!.style.height = '44px';
+      } else {
+        terminalContentArea!.style.display = 'flex';
+        terminalWindow!.style.height = '460px';
+        input.focus();
+      }
+    }
+
+    btnMinimize?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMinimizedState(true);
+    });
+
+    btnMaximize?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMinimizedState(false);
+    });
+    // --- Boot Sequence & Output Logic ---
+    const dateStr = new Date().toUTCString();
+    output.innerHTML = `<div>Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-1008-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of <span class="text-white">${dateStr}</span>
+
+ System load:  0.0               Processes:             102
+ Usage of /:   18.4% of 100.0GB  Users logged in:       1
+ Memory usage: 42%               IPv4 address for eth0: 192.168.1.1
+ Swap usage:   0%
+
+Last login: ${new Date(Date.now() - 86400000).toUTCString()} from 192.168.1.254
+Type <span class="text-[#00E5FF]">'help'</span> to see available commands.
+<br/></div>`;
+
+    // Focus input when clicking anywhere on the terminal body
+    terminalContainer?.parentElement?.addEventListener('click', () => {
+      if (!isMinimized) input.focus();
+    });
+
+    const commands: Record<string, string> = {
+      'help': `Available commands:
+  <span class="text-[#00E5FF]">ls</span>       - List directory contents
+  <span class="text-[#00E5FF]">cd</span>       - Change directory
+  <span class="text-[#00E5FF]">pwd</span>      - Print working directory
+  <span class="text-[#00E5FF]">cat</span>      - Read file contents
+  <span class="text-[#00E5FF]">grep</span>     - Search file contents
+  <span class="text-[#00E5FF]">rm</span>       - Remove file
+  <span class="text-[#00E5FF]">rmdir</span>    - Remove directory
+  <span class="text-[#00E5FF]">clear</span>    - Clear the terminal`,
+    };
+
+    const fileSystem: any = {
+      '~': {
+        type: 'dir',
+        contents: {
+          'projects': {
+            type: 'dir',
+            contents: {
+              'apollo.txt': { type: 'file', content: 'Project Apollo: High-performance dashboard application built with Next.js, featuring real-time data visualization.' },
+              'commerce.txt': { type: 'file', content: 'Mobile First Commerce: An e-commerce mobile web application focused on exceptional user experience.' }
+            }
+          },
+          'resume.txt': {
+            type: 'file',
+            content: `Nick Pidgeon
+Director of Enterprise Technology @ Delta Tau Delta Educational Foundation
+- Managed six-figure IT budget.
+- Led migration of 600,000+ records to Salesforce NPSP.
+
+Education:
+- M.S. Pathway to Computing @ USF (2025-2026)`
+          },
+          'contact.txt': {
+            type: 'file',
+            content: 'Email: nick@pidgeon.dev\nLinkedIn: https://linkedin.com/in/nicholas-pidgeon\nGitHub: https://github.com/npidgeon'
+          },
+          'secrets': {
+            type: 'dir',
+            contents: {
+              'passwords.txt': { type: 'file', content: 'hunter2\nadmin123\npassword' }
+            }
+          }
+        }
+      }
+    };
+
+    let currentPath = ['~'];
+
+    function getPromptPath() {
+      return currentPath.join('/').replace(/^~/, '~');
+    }
+
+    function resolvePath(target: string): string[] | null {
+      if (!target || target === '/') return ['~'];
+      if (target === '~') return ['~'];
+      
+      const parts = target.split('/').filter(p => p !== '' && p !== '.');
+      let newPath = target.startsWith('/') || target.startsWith('~') ? ['~'] : [...currentPath];
+      
+      for (const part of parts) {
+        if (part === '..') {
+          if (newPath.length > 1) newPath.pop();
+        } else if (part !== '~') {
+          newPath.push(part);
+        }
+      }
+      
+      // Check if valid
+      let node = fileSystem;
+      for (let i = 0; i < newPath.length; i++) {
+         const p = newPath[i];
+         if (i === 0 && p === '~') {
+           node = fileSystem['~'];
+           continue;
+         }
+         if (node.type === 'dir' && node.contents && node.contents[p]) {
+           node = node.contents[p];
+         } else {
+           return null; // invalid path
+         }
+      }
+      return newPath;
+    }
+
+    function getNode(pathArr: string[]) {
+      let node = fileSystem['~'];
+      for (let i = 1; i < pathArr.length; i++) {
+        node = node.contents[pathArr[i]];
+      }
+      return node;
+    }
+
+    function printOut(html: string, colorClass: string = 'text-[#a1a1aa]') {
+      const resp = document.createElement('div');
+      resp.className = `whitespace-pre-wrap mt-1 mb-2 ${colorClass}`;
+      resp.innerHTML = html;
+      output!.appendChild(resp);
+    }
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const rawCmd = input.value.trim();
+        const args = rawCmd.split(' ').filter(a => a.length > 0);
+        const cmd = args.length > 0 ? args[0].toLowerCase() : '';
+        const cmdArgs = args.slice(1);
+        
+        // Echo command
+        const cmdLine = document.createElement('div');
+        cmdLine.innerHTML = `<span class="text-[#22c55e] font-bold">nick@ubuntu</span>:<span class="text-[#3b82f6] font-bold">${getPromptPath()}</span>$ ${input.value}`;
+        output.appendChild(cmdLine);
+
+        // Process command
+        if (cmd === '') {
+          // Do nothing
+        } else if (cmd === 'clear') {
+          output.innerHTML = '';
+        } else if (commands[cmd]) {
+          printOut(commands[cmd]);
+        } else if (cmd === 'pwd') {
+          printOut(currentPath.join('/').replace(/^~/, '/home/nick'));
+        } else if (cmd === 'cd') {
+          const target = cmdArgs.length > 0 ? cmdArgs[0] : '~';
+          const newPath = resolvePath(target);
+          if (!newPath) {
+            printOut(`bash: cd: ${target}: No such file or directory`, 'text-[#ef4444]');
+          } else {
+            const node = getNode(newPath);
+            if (node.type !== 'dir') {
+              printOut(`bash: cd: ${target}: Not a directory`, 'text-[#ef4444]');
+            } else {
+              currentPath = newPath;
+              const promptEl = document.getElementById('prompt-path');
+              if (promptEl) promptEl.innerText = getPromptPath();
+            }
+          }
+        } else if (cmd === 'ls') {
+          const target = cmdArgs.length > 0 ? cmdArgs[0] : '.';
+          const targetPath = resolvePath(target === '.' ? '' : target);
+          if (!targetPath) {
+            printOut(`ls: cannot access '${target}': No such file or directory`, 'text-[#ef4444]');
+          } else {
+            const node = getNode(targetPath);
+            if (node.type !== 'dir') {
+              printOut(targetPath[targetPath.length-1]);
+            } else {
+              const keys = Object.keys(node.contents).sort();
+              if (keys.length > 0) {
+                const outstr = keys.map(k => node.contents[k].type === 'dir' ? `<span class="text-[#3b82f6] font-bold">${k}/</span>` : k).join('  ');
+                printOut(outstr);
+              }
+            }
+          }
+        } else if (cmd === 'cat') {
+          if (cmdArgs.length === 0) printOut("cat: missing operand", "text-[#ef4444]");
+          else {
+            const targetPath = resolvePath(cmdArgs[0]);
+            if (!targetPath) printOut(`cat: ${cmdArgs[0]}: No such file or directory`, "text-[#ef4444]");
+            else {
+              const node = getNode(targetPath);
+              if (node.type === 'dir') printOut(`cat: ${cmdArgs[0]}: Is a directory`, "text-[#ef4444]");
+              else printOut(node.content);
+            }
+          }
+        } else if (cmd === 'rm' || cmd === 'rmdir') {
+          if (cmdArgs.length === 0) printOut(`${cmd}: missing operand`, "text-[#ef4444]");
+          else if (cmdArgs[0] === '-r' || cmdArgs[0] === '-rf') printOut(`${cmd}: Permission denied (nice try though)`, "text-[#ef4444]");
+          else {
+            const targetPath = resolvePath(cmdArgs[0]);
+            if (!targetPath || (targetPath.length === 1 && targetPath[0] === '~')) {
+              printOut(`${cmd}: cannot remove '${cmdArgs[0]}': No such file or directory`, "text-[#ef4444]");
+            } else {
+              const targetName = targetPath[targetPath.length-1];
+              let parentNode = fileSystem['~'];
+              for(let i=1; i<targetPath.length-1; i++) parentNode = parentNode.contents[targetPath[i]];
+              
+              const node = parentNode.contents[targetName];
+              if (cmd === 'rmdir' && node.type !== 'dir') printOut(`rmdir: failed to remove '${cmdArgs[0]}': Not a directory`, "text-[#ef4444]");
+              else if (cmd === 'rmdir' && Object.keys(node.contents).length > 0) printOut(`rmdir: failed to remove '${cmdArgs[0]}': Directory not empty`, "text-[#ef4444]");
+              else if (cmd === 'rm' && node.type === 'dir') printOut(`rm: cannot remove '${cmdArgs[0]}': Is a directory`, "text-[#ef4444]");
+              else {
+                delete parentNode.contents[targetName];
+                if (targetName === 'resume.txt') printOut("Wait, I needed that to get hired! 😭", "text-[#eab308]");
+                else printOut(""); // Empty success
+              }
+            }
+          }
+        } else if (cmd === 'grep') {
+          if (cmdArgs.length < 2) printOut("grep: usage: grep [pattern] [file]", "text-[#ef4444]");
+          else {
+            const term = cmdArgs[0];
+            const targetPath = resolvePath(cmdArgs[1]);
+            if (!targetPath) printOut(`grep: ${cmdArgs[1]}: No such file or directory`, "text-[#ef4444]");
+            else {
+              const node = getNode(targetPath);
+              if (node.type === 'dir') printOut(`grep: ${cmdArgs[1]}: Is a directory`, "text-[#ef4444]");
+              else {
+                const lines = node.content.split('\\n');
+                const matches = lines.filter((l: string) => l.toLowerCase().includes(term.toLowerCase()));
+                if (matches.length > 0) {
+                  printOut(matches.map((m: string) => m.replace(new RegExp(term, 'gi'), match => `<span class="text-red-500 font-bold">${match}</span>`)).join('\\n'));
+                }
+              }
+            }
+          }
+        } else {
+          printOut(`bash: ${cmd}: command not found. Type 'help' for available commands.`, 'text-[#ef4444]');
+        }
+
+        // Reset and scroll
+        input.value = '';
+        output.scrollTop = output.scrollHeight;
+      }
+    });
+  });
+</script>
 
 <style>
   html {
