@@ -439,6 +439,7 @@ Education:
     }
 
     function resolvePath(target: string): string[] | null {
+      if (target === '') return [...currentPath];
       if (!target || target === '/') return ['~'];
       if (target === '~') return ['~'];
       
