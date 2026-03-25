@@ -1,20 +1,19 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* Discord-inspired Dark Theme overrides */
 :root {
   --bg-main: #313338;
-  --bg-secondary: #2B2D31;
-  --bg-tertiary: #1E1F22;
-  --text-main: #F2F3F5;
-  --text-muted: #B5BAC1;
-  --accent: #5865F2;
+  --bg-secondary: #2b2d31;
+  --bg-tertiary: #1e1f22;
+  --text-main: #f2f3f5;
+  --text-muted: #b5bac1;
+  --accent: #5865f2;
 }
 
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
-  font-family: 'Inter', 'Outfit', sans-serif;
+  font-family: "Inter", "Outfit", sans-serif;
   margin: 0;
   min-height: 100vh;
 }
