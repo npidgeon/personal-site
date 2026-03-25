@@ -567,7 +567,7 @@ Education:
               else if (cmd === 'rm' && node.type === 'dir') printOut(`rm: cannot remove '${cmdArgs[0]}': Is a directory`, "text-[#ef4444]");
               else {
                 delete parentNode.contents[targetName];
-                if (targetName === 'resume.txt') printOut("Wait, I needed that to get hired! 😭", "text-[#eab308]");
+                if (targetName === 'resume.txt') printOut("Wait, I need that to get hired!", "text-[#eab308]");
                 else printOut(""); // Empty success
               }
             }
