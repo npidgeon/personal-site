@@ -18,7 +18,7 @@
                       <time class="font-mono text-sm text-[#5865F2] bg-[#5865F2]/10 px-2 py-1 rounded">June 2022 - Present (Remote)</time>
                       <div class="flex items-center gap-2 mt-2">
                         <h3 class="text-xl font-bold text-white">Director of Enterprise Technology</h3>
-                        <button class="entry-toggle ml-1 text-white/30 hover:text-white/70 transition-colors flex-shrink-0" aria-label="Toggle details" aria-expanded="false">
+                        <button class="entry-toggle ml-1 text-white/30 hover:text-white/70 transition-colors flex-shrink-0" aria-label="Toggle details" aria-expanded="true">
                           <svg class="chevron w-4 h-4 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" /></svg>
                         </button>
                       </div>
@@ -122,14 +122,25 @@
     const chevron = btn.querySelector<SVGElement>('.chevron');
     if (!body) return;
 
-    // Collapsed by default
-    body.style.maxHeight = '0px';
     body.style.overflow = 'hidden';
     body.style.transition = 'max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+
+    // Set initial state based on aria-expanded attribute
+    const isInitiallyOpen = btn.getAttribute('aria-expanded') === 'true';
+    if (isInitiallyOpen) {
+      body.style.maxHeight = 'none';
+      if (chevron) chevron.style.transform = 'rotate(180deg)';
+    } else {
+      body.style.maxHeight = '0px';
+    }
 
     btn.addEventListener('click', () => {
       const isOpen = btn.getAttribute('aria-expanded') === 'true';
       if (isOpen) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        // force reflow
+        void body.offsetWidth;
+        
         body.style.maxHeight = '0px';
         btn.setAttribute('aria-expanded', 'false');
         if (chevron) chevron.style.transform = 'rotate(0deg)';
@@ -137,6 +148,12 @@
         body.style.maxHeight = body.scrollHeight + 'px';
         btn.setAttribute('aria-expanded', 'true');
         if (chevron) chevron.style.transform = 'rotate(180deg)';
+        
+        setTimeout(() => {
+          if (btn.getAttribute('aria-expanded') === 'true') {
+            body.style.maxHeight = 'none';
+          }
+        }, 400);
       }
     });
   });
