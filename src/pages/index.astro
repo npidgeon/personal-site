@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import Experience from '../components/Experience.astro';
 import Education from '../components/Education.astro';
+import Skills from '../components/Skills.astro';
 import Footer from '../components/Footer.astro';
 import DrawerSide from '../components/DrawerSide.astro';
 ---
@@ -20,6 +21,7 @@ import DrawerSide from '../components/DrawerSide.astro';
         <Hero />
         <Experience />
         <Education />
+        <Skills />
       </main>
 
       <Footer />
@@ -34,3 +36,20 @@ import DrawerSide from '../components/DrawerSide.astro';
     scroll-behavior: smooth;
   }
 </style>
+
+<script>
+  // Scroll-triggered animations — add .section-visible when section enters viewport
+  const animatedSections = document.querySelectorAll('.section-animate');
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('section-visible');
+          sectionObserver.unobserve(entry.target); // animate once
+        }
+      });
+    },
+    { threshold: 0.08 }
+  );
+  animatedSections.forEach((el) => sectionObserver.observe(el));
+</script>

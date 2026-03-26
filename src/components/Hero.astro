@@ -6,7 +6,7 @@ import Terminal from './Terminal.astro';
   <div class="container mx-auto px-6 lg:px-12 relative z-10 py-20">
     <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 justify-between">
               <!-- Left side text -->
-              <div class="max-w-2xl lg:max-w-md xl:max-w-xl flex-1">
+              <div class="max-w-2xl lg:max-w-md xl:max-w-xl flex-1 hero-text-enter">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2B2D31] border border-white/5 mb-6 shadow-sm">
                   <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
@@ -16,7 +16,9 @@ import Terminal from './Terminal.astro';
                 </div>
                 <h1 class="text-5xl md:text-7xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight mb-1 leading-tight">
                   Building better <br/>
-                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5865F2] to-[#00E5FF]">systems.</span>
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5865F2] to-[#00E5FF]">
+                    <span id="hero-cycle-text">systems</span><span id="hero-cursor">.</span>
+                  </span>
                 </h1>
                 <p class="text-xl font-medium text-white/40 mb-8 italic">
                   (and occasionally breaking them)
@@ -35,7 +37,79 @@ import Terminal from './Terminal.astro';
                 </div>
               </div>
 
-      <Terminal />
+      <div class="terminal-enter">
+        <Terminal />
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  // --- Typewriter cycling text ---
+  const words = ['systems', 'solutions', 'automations'];
+  const textEl = document.getElementById('hero-cycle-text');
+  const cursorEl = document.getElementById('hero-cursor');
+  if (textEl && cursorEl) {
+    const cycleEl = textEl as HTMLElement;
+    const blinkEl = cursorEl as HTMLElement;
+    let wordIndex = 0;
+    let charIndex = words[0].length; // start fully-typed (matches the HTML)
+    let deleting = true;             // first action is to erase, not type
+    let pauseFrames = 0;
+
+    // Cursor blink
+    let cursorVisible = true;
+    setInterval(() => {
+      cursorVisible = !cursorVisible;
+      blinkEl.style.opacity = cursorVisible ? '1' : '0';
+    }, 530);
+
+    function tick() {
+      // Unified pause — gates both typing AND deleting phases
+      if (pauseFrames > 0) { pauseFrames--; setTimeout(tick, 60); return; }
+
+      const current = words[wordIndex];
+      if (deleting) {
+        charIndex--;
+        cycleEl.textContent = current.substring(0, charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          pauseFrames = 50; // ~3s gap before typing next word
+        }
+        setTimeout(tick, 75);
+      } else {
+        charIndex++;
+        cycleEl.textContent = current.substring(0, charIndex);
+        if (charIndex === current.length) {
+          deleting = true;
+          pauseFrames = 90; // ~5.4s display pause before deleting
+        }
+        setTimeout(tick, 85);
+      }
+    }
+
+
+    // Start after load animation settles (3.2s) + end-of-word display pause (5.4s)
+    setTimeout(tick, 3200 + 90 * 60);
+  }
+</script>
+
+<style>
+  /* Page load entrance animations */
+  .hero-text-enter {
+    animation: heroTextIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  }
+  .terminal-enter {
+    animation: terminalIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+  }
+
+  @keyframes heroTextIn {
+    from { opacity: 0; transform: translateX(-28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes terminalIn {
+    from { opacity: 0; transform: translateX(28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+</style>

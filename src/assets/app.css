@@ -17,3 +17,65 @@ body {
   margin: 0;
   min-height: 100vh;
 }
+
+/* =============================================
+   Scroll-triggered section animations
+   .section-animate = hidden initial state
+   .section-visible = revealed (added by JS)
+   ============================================= */
+.section-animate {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-animate.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children inside animated sections */
+.section-animate .timeline-end {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-animate.section-visible .timeline-end:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+.section-animate.section-visible .timeline-end:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.section-animate.section-visible .timeline-end:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+
+/* Skill card stagger */
+.section-animate .skill-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-animate.section-visible .skill-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+.section-animate.section-visible .skill-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.16s; }
+.section-animate.section-visible .skill-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.24s; }
+.section-animate.section-visible .skill-card:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.32s; }
+.section-animate.section-visible .skill-card:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.40s; }
+.section-animate.section-visible .skill-card:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.48s; }
+
+/* =============================================
+   Smooth section transitions — gradient dividers
+   ============================================= */
+section + section {
+  position: relative;
+}
+section + section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(88,101,242,0.25) 30%, rgba(0,229,255,0.18) 70%, transparent 100%);
+  pointer-events: none;
+}
+

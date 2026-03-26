@@ -1,6 +1,6 @@
 ---
 ---
-      <nav class="w-full navbar bg-[#2B2D31]/80 backdrop-blur-md sticky top-0 z-50 border-b border-[#1E1F22]/50 shadow-sm">
+      <nav id="main-nav" class="w-full navbar bg-[#2B2D31]/80 backdrop-blur-md sticky top-0 z-50 border-b border-[#1E1F22]/50 shadow-sm nav-enter">
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -14,10 +14,51 @@
         </div>
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal gap-2 px-4 text-white/80 font-medium">
-            <li><a href="#about" class="hover:text-white hover:bg-white/5 transition-colors rounded-lg">About</a></li>
-            <li><a href="#resume" class="hover:text-white hover:bg-white/5 transition-colors rounded-lg">Experience</a></li>
-            <li><a href="#education" class="hover:text-white hover:bg-white/5 transition-colors rounded-lg">Education</a></li>
-            <li><a href="#contact" class="btn btn-sm bg-[#5865F2] hover:bg-[#4752C4] border-none text-white ml-2">Get in touch</a></li>
+            <li><a href="#about"     data-section="about"     class="nav-link hover:text-white hover:bg-white/5 transition-colors rounded-lg">About</a></li>
+            <li><a href="#resume"    data-section="resume"    class="nav-link hover:text-white hover:bg-white/5 transition-colors rounded-lg">Experience</a></li>
+            <li><a href="#education" data-section="education" class="nav-link hover:text-white hover:bg-white/5 transition-colors rounded-lg">Education</a></li>
+            <li><a href="#skills"    data-section="skills"    class="nav-link hover:text-white hover:bg-white/5 transition-colors rounded-lg">Skills</a></li>
+            <li><a href="#contact"   class="btn btn-sm bg-[#5865F2] hover:bg-[#4752C4] border-none text-white ml-2">Get in touch</a></li>
           </ul>
         </div>
       </nav>
+
+<script>
+  // Active nav link highlighting via IntersectionObserver
+  const sections = ['about', 'resume', 'education', 'skills', 'contact'];
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link[data-section]');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((link) => {
+            const isActive = link.dataset.section === entry.target.id;
+            link.classList.toggle('text-white', isActive);
+            link.classList.toggle('bg-white/5', isActive);
+            link.classList.toggle('text-white/80', !isActive);
+          });
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -60% 0px', threshold: 0 }
+  );
+
+  sections.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>
+
+<style>
+  .nav-enter {
+    animation: navSlideDown 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+  }
+  @keyframes navSlideDown {
+    from { opacity: 0; transform: translateY(-100%); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .nav-link {
+    transition: color 0.2s, background 0.2s;
+  }
+</style>

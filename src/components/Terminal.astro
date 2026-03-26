@@ -142,7 +142,14 @@ Type <span class="text-[#00E5FF]">'help'</span> to see available commands.
   <span class="text-[#00E5FF]">grep</span>     - Search file contents
   <span class="text-[#00E5FF]">rm</span>       - Remove file
   <span class="text-[#00E5FF]">rmdir</span>    - Remove directory
+  <span class="text-[#00E5FF]">whoami</span>   - Who is this guy anyway?
   <span class="text-[#00E5FF]">clear</span>    - Clear the terminal`,
+      'whoami': `nick — aspiring software engineer, data wrangler, and occasional bug factory.
+Building a CS foundation on top of 4 years of hands-on IT and Salesforce work.
+Currently enrolled in USF's Pathway to Computing graduate program.
+Goal: transition into a software engineering or data engineering role.
+
+Type <span class="text-[#00E5FF]">cat resume.txt</span> or <span class="text-[#00E5FF]">cat skills.txt</span> to learn more.`,
     };
 
     const fileSystem: any = {
@@ -181,6 +188,15 @@ Skills:
 - Microsoft Excel (Advanced)
 - Linux (Ubuntu, Ubuntu Server)
 - Docker`
+          },
+          'skills.txt': {
+            type: 'file',
+            content: `Languages:      Python, C, Java, JavaScript, HTML/CSS, SQL, Apex, SOQL
+Salesforce:     NPSP Admin, Flows & Automation, Apex Classes, API Integrations, Data Migration
+Infrastructure: Linux (Ubuntu), Docker, Git, SharePoint, Microsoft 365
+Web & Software: Astro, React, Node.js, REST APIs, Tailwind CSS, Data Structures
+Leadership:     Vendor Negotiation, Stakeholder Mgmt, Technical Writing, Project Management
+Languages:      English (Native), Spanish (SIELE C1)`
           },
           'contact.txt': {
             type: 'file',
