@@ -83,7 +83,7 @@ import Terminal from './Terminal.astro';
         cycleEl.textContent = current.substring(0, charIndex);
         if (charIndex === current.length) {
           deleting = true;
-          pauseFrames = 90; // ~5.4s display pause before deleting
+          pauseFrames = 60; // ~5.4s display pause before deleting
         }
         setTimeout(tick, 85);
       }
