@@ -20,7 +20,7 @@ import Terminal from './Terminal.astro';
                     <span id="hero-cycle-text">systems</span><span id="hero-cursor">.</span>
                   </span>
                 </h1>
-                <p class="text-xl font-medium text-white/40 mb-8 italic">
+                <p class="text-md font-medium text-white/40 mb-8 italic">
                   (and occasionally breaking them)
                 </p>
                 <p class="text-xl text-white/60 mb-10 leading-relaxed">
@@ -83,7 +83,7 @@ import Terminal from './Terminal.astro';
         cycleEl.textContent = current.substring(0, charIndex);
         if (charIndex === current.length) {
           deleting = true;
-          pauseFrames = 60; // ~5.4s display pause before deleting
+          pauseFrames = 60; // ~3.6s display pause before deleting
         }
         setTimeout(tick, 85);
       }
