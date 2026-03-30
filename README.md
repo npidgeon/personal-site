@@ -3,7 +3,7 @@
 My personal portfolio/resume website. This project is designed as a modern, interactive showcase of experience, projects, and skills, featuring a sleek, Discord-inspired theme and an interactive"UNIX" terminal.
 While I wouldn't consider myself a web dev or designer, I can appreciate a well-designed modern site and wanted to try my hand at making one.
 
-## Technologies Used
+## Tech Stack
 
 This project is built using a modern frontend stack:
 
