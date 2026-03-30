@@ -1,6 +1,6 @@
 # pidgeon.dev - a modern, interactive resume website
 
-![Image](https://github.com/user-attachments/assets/5b447af4-38a9-49bf-900f-cad2071ffdad)
+![Terminal Preview](https://github.com/user-attachments/assets/3022ddf7-6dfb-4cd4-9b39-a74d63f914d9)
 
 This is my personal portfolio/resume website. It is designed as a modern, interactive showcase of my experience, projects, and skills, featuring a sleek, Discord-inspired theme and an interactive"UNIX" terminal.
 As a developer more comfortable with backend systems and automation, building this took me out of my comfort zone and forced me to learn a lot about modern frontend development.
