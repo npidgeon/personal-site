@@ -4,6 +4,8 @@ This is my personal portfolio/resume website. It is designed as a modern, intera
 While I wouldn't consider myself a web dev or designer, I can appreciate a well-designed modern site and wanted to try my hand at making one.
 Using Astro allows me to keep the site static and fast (allowing for free hosting) without sacrificing design or functionality.
 
+The live url is [https://www.pidgeon.dev](https://www.pidgeon.dev), check it out!
+
 ## Tech Stack
 
 This project is built using a modern frontend stack:
