@@ -23,7 +23,7 @@ This project is built using a modern frontend stack:
 
 ## AI Usage
 
-Google Antigravity IDE agentic AI features were used for initial website skeleton, most major feature implementations, and several design tweaks.
+Google Antigravity agentic AI features were used for initial website skeleton, most major feature implementations, and several design tweaks.
 Models used include Gemini 3.1 Pro, Gemini 3 Flash, Claude Opus 4.6 and Sonnet 4.6.
 All educational, professional and skill-related content was added by me.
 
