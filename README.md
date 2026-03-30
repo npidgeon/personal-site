@@ -24,7 +24,7 @@ This project is built using a modern frontend stack:
 ## AI Usage
 
 Google Antigravity IDE agentic AI features were used for initial website skeleton and major feature implementations (Gemini 3.1 Pro, Gemini 3 Flash, Claude Opus and Sonnet).
-This includes the interactive terminal and animations. All educational, professional and skill-related content was added by me, and several
+This includes the logic for the interactive terminal and animations. All educational, professional and skill-related content was added by me, and several
 tweaks were made to formatting, colors, layout and auxiliary features (favicons, OG image, etc.).
 
 ## License
