@@ -1,0 +1,649 @@
+---
+/*
+  FlowBuilder — an interactive recreation of Salesforce Flow Builder (auto-layout).
+  Prototype widget: recognizable to anyone with SF admin experience.
+  Self-contained; no external deps. Connectors are drawn in SVG, measured from
+  the live DOM so the layout stays responsive.
+*/
+---
+
+<div
+  id="flow-wrapper"
+  class="w-full sm:w-[576px] md:w-[672px] lg:w-[576px] xl:w-[672px] max-w-full flex-none relative group z-20"
+>
+  <!-- Accent glow, mirrors the Terminal widget -->
+  <div
+    class="absolute -inset-0.5 bg-gradient-to-r from-[#5865F2] to-[#00E5FF] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"
+  ></div>
+
+  <div
+    class="relative w-full rounded-xl bg-[#09090b] border border-[#27272a] shadow-2xl overflow-hidden flex flex-col h-[460px] hover:shadow-[#5865F2]/20 transition-shadow"
+  >
+    <!-- ===== Window header (dark chrome, ties to site theme) ===== -->
+    <div
+      class="bg-[#18181b] px-3 py-2.5 flex items-center gap-2 border-b border-[#27272a] select-none shrink-0"
+    >
+      <!-- Flow icon tile -->
+      <div
+        class="w-6 h-6 rounded-md bg-gradient-to-br from-[#5865F2] to-[#00E5FF] flex items-center justify-center shrink-0 shadow-sm"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="#fff">
+          <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
+        </svg>
+      </div>
+      <div class="flex flex-col leading-tight min-w-0">
+        <span class="text-[13px] font-semibold text-[#f2f3f5] truncate">Lead Qualification &amp; Routing</span>
+        <span class="text-[10px] text-[#a1a1aa] font-mono truncate hidden sm:block">Flow Builder · Record-Triggered</span>
+      </div>
+      <!-- Active badge -->
+      <span
+        class="ml-auto inline-flex items-center gap-1 text-[10px] font-medium text-[#3fce8f] bg-[#3fce8f]/10 border border-[#3fce8f]/25 rounded-full px-2 py-0.5 shrink-0"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-[#3fce8f]"></span>Active
+      </span>
+      <!-- Debug (primary action) -->
+      <button
+        id="flow-debug-btn"
+        class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-md px-3 py-1.5 transition-colors shrink-0 disabled:opacity-60"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+        Debug
+      </button>
+    </div>
+
+    <!-- ===== Flow canvas (authentic light SLDS surface) ===== -->
+    <div id="flow-canvas" class="relative flex-grow overflow-auto flow-canvas">
+      <div id="flow-stage" class="flow-stage">
+        <!-- Connector layer -->
+        <svg id="flow-svg" class="flow-svg" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="#b0adab" />
+            </marker>
+            <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="#5865F2" />
+            </marker>
+            <linearGradient id="flow-active-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5865F2" />
+              <stop offset="100%" stop-color="#00E5FF" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- Node column -->
+        <div class="flow-col">
+          <!-- Start -->
+          <div class="flow-node flow-start" id="node-start" data-anchor>
+            <span class="flow-tile" style="background:#04844b">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" /></svg>
+            </span>
+            <span class="flow-labels">
+              <span class="flow-title">Start</span>
+              <span class="flow-sub">Lead Created</span>
+            </span>
+          </div>
+
+          <!-- Decision -->
+          <div class="flow-node" id="node-decision" data-anchor>
+            <span class="flow-tile" style="background:#ff9139">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 21 12 12 21 3 12z" /></svg>
+            </span>
+            <span class="flow-labels">
+              <span class="flow-title">High-Value Lead?</span>
+              <span class="flow-sub">Decision</span>
+            </span>
+          </div>
+
+          <!-- Branch row -->
+          <div class="flow-branch">
+            <div class="flow-node flow-branch-node" id="node-hot" data-anchor>
+              <span class="flow-tile" style="background:#f95d74">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" /></svg>
+              </span>
+              <span class="flow-labels">
+                <span class="flow-title">Set Priority: Hot</span>
+                <span class="flow-sub">Update Records</span>
+              </span>
+            </div>
+
+            <div class="flow-node flow-branch-node" id="node-warm" data-anchor>
+              <span class="flow-tile" style="background:#f95d74">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" /></svg>
+              </span>
+              <span class="flow-labels">
+                <span class="flow-title">Set Priority: Warm</span>
+                <span class="flow-sub">Update Records</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Merge point -->
+          <div class="flow-merge" id="node-merge" data-anchor></div>
+
+          <!-- Create task -->
+          <div class="flow-node" id="node-task" data-anchor>
+            <span class="flow-tile" style="background:#f95d74">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+            </span>
+            <span class="flow-labels">
+              <span class="flow-title">Create Follow-Up Task</span>
+              <span class="flow-sub">Create Records</span>
+            </span>
+          </div>
+
+          <!-- End -->
+          <div class="flow-end" id="node-end" data-anchor>End</div>
+        </div>
+
+        <!-- Overlay elements (positioned by JS): outcome labels + add buttons -->
+        <div class="flow-pill" id="label-yes">Yes</div>
+        <div class="flow-pill" id="label-standard">Standard</div>
+      </div>
+
+      <!-- Zoom controls -->
+      <div class="flow-zoom">
+        <button id="flow-zoom-in" title="Zoom in">+</button>
+        <button id="flow-zoom-fit" title="Fit">▢</button>
+        <button id="flow-zoom-out" title="Zoom out">−</button>
+      </div>
+    </div>
+
+    <!-- ===== Status bar: scenario picker + debug result ===== -->
+    <div class="bg-[#18181b] border-t border-[#27272a] px-3 py-2 flex items-center gap-2 shrink-0">
+      <div class="flow-seg" role="group" aria-label="Debug scenario">
+        <button data-scenario="acme" class="is-active">Acme Corp · $4.2M</button>
+        <button data-scenario="bayside">Bayside Bakery · $85K</button>
+      </div>
+      <span id="flow-result" class="ml-auto text-[11px] text-[#a1a1aa] font-mono truncate text-right">
+        Pick a lead, then Debug ▶
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ---- Canvas surface ---- */
+  .flow-canvas {
+    background-color: #f3f2f2;
+    background-image: radial-gradient(circle, #d6d4d3 1px, transparent 1px);
+    background-size: 18px 18px;
+    cursor: grab;
+  }
+  .flow-canvas.is-panning { cursor: grabbing; }
+
+  .flow-stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+    padding: 22px 28px 26px;
+    box-sizing: content-box;
+  }
+  .flow-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .flow-col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 46px;
+    z-index: 1;
+  }
+
+  /* ---- Nodes ---- */
+  .flow-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 212px;
+    background: #fff;
+    border: 1px solid #dddbda;
+    border-radius: 8px;
+    padding: 9px 12px 9px 9px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.09);
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+  .flow-node:hover { border-color: #1b96ff; }
+
+  .flow-tile {
+    width: 34px;
+    height: 34px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .flow-labels { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+  .flow-title {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #080707;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .flow-sub {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 11px;
+    color: #706e6b;
+  }
+
+  .flow-start { border-color: #c9c7c5; }
+
+  /* Branch row */
+  .flow-branch { display: flex; gap: 40px; align-items: flex-start; }
+  .flow-branch-node { width: 196px; }
+
+  /* Merge point */
+  .flow-merge {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #b0adab;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  /* End node */
+  .flow-end {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #514f4d;
+    background: #ecebea;
+    border: 1px solid #c9c7c5;
+    border-radius: 999px;
+    padding: 5px 16px;
+  }
+
+  /* ---- Active (debug) states ---- */
+  .flow-node.is-active {
+    border-color: #5865f2;
+    box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.35), 0 6px 14px rgba(88, 101, 242, 0.22);
+    transform: translateY(-1px);
+  }
+  .flow-merge.is-active { border-color: #5865f2; box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.25); }
+  .flow-end.is-active { border-color: #5865f2; color: #3b3f8f; box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.3); }
+  .is-dim { opacity: 0.32; filter: grayscale(0.4); transition: opacity 0.3s, filter 0.3s; }
+
+  /* ---- Connectors ---- */
+  .flow-conn {
+    fill: none;
+    stroke: #b0adab;
+    stroke-width: 2;
+    marker-end: url(#arrow);
+    transition: opacity 0.3s;
+  }
+  .flow-conn.is-active {
+    stroke: url(#flow-active-grad);
+    stroke-width: 2.6;
+    marker-end: url(#arrow-active);
+    stroke-dasharray: 7 5;
+    animation: flow-dash 0.6s linear infinite;
+  }
+  .flow-conn.is-dim { opacity: 0.28; }
+  @keyframes flow-dash { to { stroke-dashoffset: -24; } }
+
+  /* ---- Overlay pills (outcome labels) ---- */
+  .flow-pill {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: #514f4d;
+    background: #fff;
+    border: 1px solid #dddbda;
+    border-radius: 999px;
+    padding: 1px 8px;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: color 0.25s, border-color 0.25s, background 0.25s;
+  }
+  .flow-pill.is-active { color: #5865f2; border-color: #5865f2; background: #eef0ff; }
+
+  /* ---- Add (+) badges ---- */
+  .flow-add {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #c9c7c5;
+    color: #706e6b;
+    font-size: 13px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ---- Zoom controls ---- */
+  .flow-zoom {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #dddbda;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    z-index: 5;
+  }
+  .flow-zoom button {
+    width: 26px;
+    height: 24px;
+    font-size: 13px;
+    color: #514f4d;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  .flow-zoom button:hover { background: #f3f2f2; color: #1b96ff; }
+  .flow-zoom button + button { border-top: 1px solid #ecebea; }
+
+  /* ---- Scenario segmented control ---- */
+  .flow-seg { display: inline-flex; background: #09090b; border: 1px solid #27272a; border-radius: 7px; padding: 2px; }
+  .flow-seg button {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #a1a1aa;
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 9px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .flow-seg button:hover { color: #e4e4e7; }
+  .flow-seg button.is-active { background: #5865f2; color: #fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flow-conn.is-active { animation: none; }
+  }
+</style>
+
+<script>
+  (() => {
+    const wrapper = document.getElementById('flow-wrapper');
+    if (!wrapper) return;
+
+    const canvas = wrapper.querySelector('#flow-canvas') as HTMLElement;
+    const stage = wrapper.querySelector('#flow-stage') as HTMLElement;
+    const svg = wrapper.querySelector('#flow-svg') as unknown as SVGSVGElement;
+    const debugBtn = wrapper.querySelector('#flow-debug-btn') as HTMLButtonElement;
+    const resultEl = wrapper.querySelector('#flow-result') as HTMLElement;
+    const labelYes = wrapper.querySelector('#label-yes') as HTMLElement;
+    const labelStandard = wrapper.querySelector('#label-standard') as HTMLElement;
+    if (!canvas || !stage || !svg) return;
+
+    const N = (id: string) => wrapper.querySelector('#node-' + id) as HTMLElement;
+    const nodes = {
+      start: N('start'), decision: N('decision'), hot: N('hot'),
+      warm: N('warm'), merge: N('merge'), task: N('task'), end: N('end'),
+    };
+
+    let zoom = 1;
+
+    // ---- Geometry helpers ----
+    type Pt = { x: number; y: number };
+    const sub = (a: Pt, b: Pt): Pt => ({ x: a.x - b.x, y: a.y - b.y });
+    const len = (a: Pt) => Math.hypot(a.x, a.y) || 1;
+    const norm = (a: Pt): Pt => ({ x: a.x / len(a), y: a.y / len(a) });
+
+    // Node anchors in unscaled stage-local coordinates.
+    function box(el: HTMLElement) {
+      const r = el.getBoundingClientRect();
+      const s = stage.getBoundingClientRect();
+      const left = (r.left - s.left) / zoom;
+      const top = (r.top - s.top) / zoom;
+      const w = r.width / zoom;
+      const h = r.height / zoom;
+      return { cx: left + w / 2, top, bottom: top + h, left, right: left + w };
+    }
+
+    // Rounded orthogonal path through a list of points.
+    function ortho(pts: Pt[], r = 9): string {
+      if (pts.length < 2) return '';
+      let d = `M ${pts[0].x} ${pts[0].y}`;
+      for (let i = 1; i < pts.length - 1; i++) {
+        const p = pts[i], prev = pts[i - 1], next = pts[i + 1];
+        const v1 = norm(sub(p, prev)), v2 = norm(sub(next, p));
+        const d1 = Math.min(r, len(sub(p, prev)) / 2);
+        const d2 = Math.min(r, len(sub(next, p)) / 2);
+        d += ` L ${p.x - v1.x * d1} ${p.y - v1.y * d1}`;
+        d += ` Q ${p.x} ${p.y} ${p.x + v2.x * d2} ${p.y + v2.y * d2}`;
+      }
+      const last = pts[pts.length - 1];
+      d += ` L ${last.x} ${last.y}`;
+      return d;
+    }
+
+    // Connector definitions. type drives routing.
+    const conns = [
+      { id: 'c-sd', from: 'start', to: 'decision', type: 'straight' },
+      { id: 'c-dh', from: 'decision', to: 'hot', type: 'branch' },
+      { id: 'c-dw', from: 'decision', to: 'warm', type: 'branch' },
+      { id: 'c-hm', from: 'hot', to: 'merge', type: 'merge' },
+      { id: 'c-wm', from: 'warm', to: 'merge', type: 'merge' },
+      { id: 'c-mt', from: 'merge', to: 'task', type: 'straight' },
+      { id: 'c-te', from: 'task', to: 'end', type: 'straight' },
+    ];
+    const addSpots = ['c-sd', 'c-mt', 'c-te']; // straight connectors get a "+" badge
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const pathEls: Record<string, SVGPathElement> = {};
+    const addEls: Record<string, HTMLElement> = {};
+
+    function ensureEls() {
+      for (const c of conns) {
+        if (!pathEls[c.id]) {
+          const p = document.createElementNS(NS, 'path');
+          p.setAttribute('class', 'flow-conn');
+          p.dataset.id = c.id;
+          svg.appendChild(p);
+          pathEls[c.id] = p;
+        }
+      }
+      for (const id of addSpots) {
+        if (!addEls[id]) {
+          const b = document.createElement('div');
+          b.className = 'flow-add';
+          b.textContent = '+';
+          b.title = 'Add Element';
+          stage.appendChild(b);
+          addEls[id] = b;
+        }
+      }
+    }
+
+    function draw() {
+      ensureEls();
+      // Size the SVG to the unscaled stage content box.
+      const W = stage.offsetWidth, H = stage.offsetHeight;
+      svg.setAttribute('width', String(W));
+      svg.setAttribute('height', String(H));
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+      const b = {
+        start: box(nodes.start), decision: box(nodes.decision),
+        hot: box(nodes.hot), warm: box(nodes.warm),
+        merge: box(nodes.merge), task: box(nodes.task), end: box(nodes.end),
+      };
+
+      for (const c of conns) {
+        let pts: Pt[] = [];
+        if (c.type === 'straight') {
+          const a = (b as any)[c.from], t = (b as any)[c.to];
+          const midY = (a.bottom + t.top) / 2;
+          pts = [{ x: a.cx, y: a.bottom }, { x: a.cx, y: midY }, { x: t.cx, y: midY }, { x: t.cx, y: t.top }];
+        } else if (c.type === 'branch') {
+          const a = b.decision, t = (b as any)[c.to];
+          const busY = a.bottom + 22;
+          pts = [{ x: a.cx, y: a.bottom }, { x: a.cx, y: busY }, { x: t.cx, y: busY }, { x: t.cx, y: t.top }];
+        } else {
+          // merge
+          const a = (b as any)[c.from], m = b.merge;
+          const busY = m.top - 16;
+          pts = [{ x: a.cx, y: a.bottom }, { x: a.cx, y: busY }, { x: m.cx, y: busY }, { x: m.cx, y: m.top }];
+        }
+        pathEls[c.id].setAttribute('d', ortho(pts));
+      }
+
+      // Outcome labels on the branch drops.
+      const busY = b.decision.bottom + 22;
+      place(labelYes, b.hot.cx, (busY + b.hot.top) / 2);
+      place(labelStandard, b.warm.cx, (busY + b.warm.top) / 2);
+
+      // "+" badges at straight-connector midpoints.
+      for (const id of addSpots) {
+        const c = conns.find((x) => x.id === id)!;
+        const a = (b as any)[c.from], t = (b as any)[c.to];
+        place(addEls[id], (a.cx + t.cx) / 2, (a.bottom + t.top) / 2);
+      }
+    }
+
+    function place(el: HTMLElement, x: number, y: number) {
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+    }
+
+    // ---- Zoom / fit ----
+    function applyZoom() {
+      const W = stage.offsetWidth * zoom, H = stage.offsetHeight * zoom;
+      const left = W < canvas.clientWidth ? (canvas.clientWidth - W) / 2 : 0;
+      const top = H < canvas.clientHeight ? (canvas.clientHeight - H) / 2 : 0;
+      stage.style.transform = `scale(${zoom})`;
+      stage.style.left = left + 'px';
+      stage.style.top = top + 'px';
+    }
+    function setZoom(z: number) {
+      zoom = Math.max(0.45, Math.min(1.4, z));
+      applyZoom();
+    }
+    function fit() {
+      zoom = 1;
+      applyZoom();
+      const zw = (canvas.clientWidth - 8) / stage.offsetWidth;
+      const zh = (canvas.clientHeight - 8) / stage.offsetHeight;
+      setZoom(Math.min(1, zw, zh));
+    }
+
+    // ---- Scenario + debug ----
+    let scenario: 'acme' | 'bayside' = 'acme';
+    const scenarios = {
+      acme: {
+        branch: 'hot' as const, other: 'warm' as const,
+        active: ['c-sd', 'c-dh', 'c-hm', 'c-mt', 'c-te'],
+        pill: labelYes,
+        result: '✓ Priority → Hot · Follow-up task created · Owner notified',
+      },
+      bayside: {
+        branch: 'warm' as const, other: 'hot' as const,
+        active: ['c-sd', 'c-dw', 'c-wm', 'c-mt', 'c-te'],
+        pill: labelStandard,
+        result: '✓ Priority → Warm · Follow-up task created',
+      },
+    };
+
+    function resetStates() {
+      Object.values(nodes).forEach((n) => n.classList.remove('is-active', 'is-dim'));
+      Object.values(pathEls).forEach((p) => p.classList.remove('is-active', 'is-dim'));
+      labelYes.classList.remove('is-active');
+      labelStandard.classList.remove('is-active');
+    }
+
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    let running = false;
+
+    async function runDebug() {
+      if (running) return;
+      running = true;
+      debugBtn.disabled = true;
+      resetStates();
+      const s = scenarios[scenario];
+
+      // Dim the untaken branch immediately.
+      nodes[s.other].classList.add('is-dim');
+      const dimConn = scenario === 'acme' ? ['c-dw', 'c-wm'] : ['c-dh', 'c-hm'];
+      dimConn.forEach((id) => pathEls[id].classList.add('is-dim'));
+
+      resultEl.textContent = 'Running debug…';
+
+      const steps: Array<() => void> = [
+        () => nodes.start.classList.add('is-active'),
+        () => { activate('c-sd'); nodes.decision.classList.add('is-active'); },
+        () => { activate(s.active[1]); s.pill.classList.add('is-active'); nodes[s.branch].classList.add('is-active'); },
+        () => { activate(s.active[2]); nodes.merge.classList.add('is-active'); },
+        () => { activate('c-mt'); nodes.task.classList.add('is-active'); },
+        () => { activate('c-te'); nodes.end.classList.add('is-active'); },
+      ];
+      for (const step of steps) { step(); await sleep(620); }
+
+      resultEl.textContent = s.result;
+      running = false;
+      debugBtn.disabled = false;
+    }
+    function activate(id: string) { pathEls[id]?.classList.add('is-active'); }
+
+    // ---- Wire up controls ----
+    debugBtn.addEventListener('click', runDebug);
+    wrapper.querySelector('#flow-zoom-in')!.addEventListener('click', () => setZoom(zoom + 0.12));
+    wrapper.querySelector('#flow-zoom-out')!.addEventListener('click', () => setZoom(zoom - 0.12));
+    wrapper.querySelector('#flow-zoom-fit')!.addEventListener('click', fit);
+
+    wrapper.querySelectorAll<HTMLButtonElement>('.flow-seg button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        wrapper.querySelectorAll('.flow-seg button').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        scenario = btn.dataset.scenario as 'acme' | 'bayside';
+        resetStates();
+        resultEl.textContent = 'Ready — press Debug ▶';
+      });
+    });
+
+    // Drag-to-pan the canvas.
+    let panning = false, sx = 0, sy = 0, sl = 0, st = 0;
+    canvas.addEventListener('pointerdown', (e) => {
+      if ((e.target as HTMLElement).closest('.flow-node, .flow-zoom, .flow-add')) return;
+      panning = true; sx = e.clientX; sy = e.clientY; sl = canvas.scrollLeft; st = canvas.scrollTop;
+      canvas.classList.add('is-panning');
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!panning) return;
+      canvas.scrollLeft = sl - (e.clientX - sx);
+      canvas.scrollTop = st - (e.clientY - sy);
+    });
+    window.addEventListener('pointerup', () => { panning = false; canvas.classList.remove('is-panning'); });
+
+    // ---- Init (after layout + fonts settle) ----
+    function init() { draw(); fit(); }
+    if ((document as any).fonts?.ready) {
+      (document as any).fonts.ready.then(() => requestAnimationFrame(init));
+    }
+    requestAnimationFrame(init);
+
+    const ro = new ResizeObserver(() => { draw(); applyZoom(); });
+    ro.observe(canvas);
+    window.addEventListener('resize', () => { draw(); applyZoom(); });
+  })();
+</script>
