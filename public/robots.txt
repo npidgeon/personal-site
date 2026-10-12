@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pidgeon.dev/sitemap-index.xml

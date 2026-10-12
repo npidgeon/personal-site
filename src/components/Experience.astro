@@ -1,4 +1,8 @@
 ---
+import { experience } from '../data/resume';
+import TimelineItem from './ui/TimelineItem.astro';
+import EntryToggle from './ui/EntryToggle.astro';
+import Tag from './ui/Tag.astro';
 ---
         <section id="resume" class="py-24 bg-[#2B2D31]/30 border-y border-white/5 section-animate">
           <div class="container mx-auto px-6 lg:px-12">
@@ -8,152 +12,28 @@
             
             <div class="max-w-4xl">
               <ul class="timeline timeline-snap-icon timeline-compact timeline-vertical">
-                <li>
-                  <div class="timeline-middle text-[#5865F2]">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" /></svg>
-                  </div>
-                  <div class="timeline-end mb-10 group relative pl-6">
-                    <div class="absolute -inset-x-4 -inset-y-4 bg-white/0 group-hover:bg-white/5 rounded-2xl transition-all duration-300 z-0"></div>
-                    <div class="relative z-10">
-                      <time class="font-mono text-sm text-[#5865F2] bg-[#5865F2]/10 px-2 py-1 rounded">June 2022 - Present (Remote)</time>
+                {experience.map((job, i) => {
+                  const current = i === 0;
+                  return (
+                    <TimelineItem first={i === 0} last={i === experience.length - 1}>
+                      <time class={current ? 'font-mono text-sm text-[#5865F2] bg-[#5865F2]/10 px-2 py-1 rounded' : 'font-mono text-sm text-white/50'}>{job.dates} ({job.mode})</time>
                       <div class="flex items-center gap-2 mt-2">
-                        <h3 class="text-xl font-bold text-white">Director of Enterprise Technology</h3>
-                        <button class="entry-toggle ml-1 text-white/30 hover:text-white/70 transition-colors flex-shrink-0" aria-label="Toggle details" aria-expanded="true">
-                          <svg class="chevron w-4 h-4 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" /></svg>
-                        </button>
+                        <h3 class={`text-xl font-bold ${current ? 'text-white' : 'text-white/90'}`}>{job.title}</h3>
+                        <EntryToggle expanded={current} />
                       </div>
-                      <div class="text-white/60 text-sm mb-3">Delta Tau Delta Central Office</div>
+                      <div class="text-white/60 text-sm mb-3">{job.org}</div>
                       <div class="entry-body">
-                        <ul class="text-white/70 leading-relaxed mb-4 list-disc list-outside ml-4 space-y-1">
-                          <li>Delivered enterprise-grade Salesforce solutions as sole platform owner at a 35-person nonprofit, managing the full lifecycle from architecture and development to user enablement and data governance.</li>
-                          <li>Led the successful migration of 600,000+ constituent and donation records from two legacy CRMs to Salesforce NPSP, ensuring data integrity and system reliability.</li>
-                          <li>Managed all technical aspects of Account Engagement (Pardot) platform, optimizing list email segmentation, automation, deliverability and seamless syncing with Salesforce to empower fundraising efforts.</li>
-                          <li>Developed and implemented an internal lead scoring engine using Declarative Lookup Rollup Summaries (DLRS) and record-triggered flows to identify high-value fundraising targets based on custom and standard fields.</li>
-                          <li>Built and maintained custom objects, flows, reports and dashboards to fully leverage Salesforce data and seamlessly integrate with external systems, including GoFundMe Pro donation platform.</li>
-                          <li>Drove user enablement by training staff on Salesforce best practices, creating comprehensive documentation, and establishing standard operating procedures.</li>
-                          <li>Upheld rigorous data hygiene standards by implementing duplicate management rules and leveraging third-party enrichment tools.</li>
-                          <li>Developed an automated Python script to apply random offset (jitter) to Salesforce Maps data and generate embeddable heatmaps, ensuring data privacy compliance while enabling geographic analysis of constituent records.</li>
-                          <li>Managed platform environments utilizing Partial Copy sandboxes for configuration testing, and executed deployment to production using Change Sets.</li>
+                        <ul class={`${current ? 'text-white/70' : 'text-white/60'} leading-relaxed mb-4 list-disc list-outside ml-4 space-y-1`}>
+                          {job.bullets.map((b) => <li>{b}</li>)}
                         </ul>
                       </div>
                       <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Salesforce Administration</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Data Management</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Workflow Automation</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">IT Strategy</span>
+                        {job.tags.map((t) => <Tag name={t} />)}
                       </div>
-                    </div>
-                  </div>
-                  <hr class="bg-white/10" />
-                </li>
-                <li>
-                  <hr class="bg-white/10" />
-                  <div class="timeline-middle text-white/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" /></svg>
-                  </div>
-                  <div class="timeline-end mb-10 group relative pl-6">
-                    <div class="absolute -inset-x-4 -inset-y-4 bg-white/0 group-hover:bg-white/5 rounded-2xl transition-all duration-300 z-0"></div>
-                    <div class="relative z-10">
-                      <time class="font-mono text-sm text-white/50">Jun 2020 - Jun 2022 (Remote)</time>
-                      <div class="flex items-center gap-2 mt-2">
-                        <h3 class="text-xl font-bold text-white/90">Volunteer Recruitment Coordinator</h3>
-                        <button class="entry-toggle ml-1 text-white/30 hover:text-white/70 transition-colors flex-shrink-0" aria-label="Toggle details" aria-expanded="false">
-                          <svg class="chevron w-4 h-4 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" /></svg>
-                        </button>
-                      </div>
-                      <div class="text-white/60 text-sm mb-3">Delta Tau Delta Central Office</div>
-                      <div class="entry-body">
-                        <ul class="text-white/60 leading-relaxed mb-4 list-disc list-outside ml-4 space-y-1">
-                          <li>Utilized internal CRM, LinkedIn Sales Navigator and Asana to efficiently manage recruitment pipelines and track strong leads.</li>
-                          <li>Qualified, recruited and trained 50+ high-impact volunteers over 24 months, overseeing all stages of the onboarding process.</li>
-                        </ul>
-                      </div>
-                      <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Targeted Recruiting</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Sales</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Project Management</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Training & Onboarding</span>
-                      </div>
-                    </div>
-                  </div>
-                  <hr class="bg-white/10" />
-                </li>
-                <li>
-                  <hr class="bg-white/10" />
-                  <div class="timeline-middle text-white/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" /></svg>
-                  </div>
-                  <div class="timeline-end mb-10 group relative pl-6">
-                    <div class="absolute -inset-x-4 -inset-y-4 bg-white/0 group-hover:bg-white/5 rounded-2xl transition-all duration-300 z-0"></div>
-                    <div class="relative z-10">
-                      <time class="font-mono text-sm text-white/50">Jun 2019 - May 2020 (Hybrid)</time>
-                      <div class="flex items-center gap-2 mt-2">
-                        <h3 class="text-xl font-bold text-white/90">Leadership Consultant</h3>
-                        <button class="entry-toggle ml-1 text-white/30 hover:text-white/70 transition-colors flex-shrink-0" aria-label="Toggle details" aria-expanded="false">
-                          <svg class="chevron w-4 h-4 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" /></svg>
-                        </button>
-                      </div>
-                      <div class="text-white/60 text-sm mb-3">Delta Tau Delta Central Office</div>
-                      <div class="entry-body">
-                        <ul class="text-white/60 leading-relaxed mb-4 list-disc list-outside ml-4 space-y-1">
-                          <li>Provided in-person consulting to 17 university branches across 7 states, representing over $2.7M in budgeted revenue.</li>
-                          <li>Identified operational gaps and collaborated with branch officers to design and implement actionable improvement plans.</li>
-                        </ul>
-                      </div>
-                      <div class="flex flex-wrap gap-2">
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Process Improvement</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Consulting</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Stakeholder Engagement</span>
-                        <span class="text-xs font-mono text-[#00E5FF] bg-[#00E5FF]/10 px-2 py-1 rounded border border-[#00E5FF]/20">Revenue Management</span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                    </TimelineItem>
+                  );
+                })}
               </ul>
             </div>
           </div>
         </section>
-
-<script>
-  // Collapsible entry bodies — shared logic for Experience & Education
-  document.querySelectorAll<HTMLButtonElement>('.entry-toggle').forEach((btn) => {
-    const body = btn.closest('.relative.z-10')?.querySelector<HTMLElement>('.entry-body');
-    const chevron = btn.querySelector<SVGElement>('.chevron');
-    if (!body) return;
-
-    body.style.overflow = 'hidden';
-    body.style.transition = 'max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-
-    // Set initial state based on aria-expanded attribute
-    const isInitiallyOpen = btn.getAttribute('aria-expanded') === 'true';
-    if (isInitiallyOpen) {
-      body.style.maxHeight = 'none';
-      if (chevron) chevron.style.transform = 'rotate(180deg)';
-    } else {
-      body.style.maxHeight = '0px';
-    }
-
-    btn.addEventListener('click', () => {
-      const isOpen = btn.getAttribute('aria-expanded') === 'true';
-      if (isOpen) {
-        body.style.maxHeight = body.scrollHeight + 'px';
-        // force reflow
-        void body.offsetWidth;
-        
-        body.style.maxHeight = '0px';
-        btn.setAttribute('aria-expanded', 'false');
-        if (chevron) chevron.style.transform = 'rotate(0deg)';
-      } else {
-        body.style.maxHeight = body.scrollHeight + 'px';
-        btn.setAttribute('aria-expanded', 'true');
-        if (chevron) chevron.style.transform = 'rotate(180deg)';
-        
-        setTimeout(() => {
-          if (btn.getAttribute('aria-expanded') === 'true') {
-            body.style.maxHeight = 'none';
-          }
-        }, 400);
-      }
-    });
-  });
-</script>

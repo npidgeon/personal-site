@@ -17,7 +17,7 @@ import Terminal from './Terminal.astro';
                   (and occasionally breaking them)
                 </p>
                 <p class="text-xl text-white/60 mb-10 leading-relaxed">
-                  Hello! My name is Nick Pidgeon. I'm a Salesforce administrator and data operations professional based in the Tampa area, with 3+ years of full platform ownership. I specialize in complex automation, enterprise-scale data migrations, and cross-platform integrations: from custom object schema design and Flow automation to external API integrations. I recently completed USF's Pathway to Computing graduate certificate and am currently pursuing Salesforce's Platform Developer I.
+                  Hello! My name is Nick Pidgeon. I'm a Salesforce administrator and data operations professional based in the Tampa area, with 4+ years of full platform ownership. I specialize in complex automation, enterprise-scale data migrations, and cross-platform integrations: from custom object schema design and Flow automation to external API integrations. I recently completed USF's Pathway to Computing graduate certificate and am currently pursuing Salesforce's Platform Developer I.
                 </p>
                 <div class="flex flex-wrap gap-4">
                   <a href="#projects" class="btn bg-[#5865F2] hover:bg-[#4752C4] border-none text-white px-8 rounded-lg shadow-lg shadow-[#5865F2]/25 transition-all hover:-translate-y-0.5">
@@ -87,8 +87,8 @@ import Terminal from './Terminal.astro';
     }
 
 
-    // Start after load animation settles (3.2s) + end-of-word display pause (5.4s)
-    setTimeout(tick, 3200 + 90 * 60);
+    // Give the first word a moment on screen after the entrance animation
+    setTimeout(tick, 3000);
   }
 </script>
 
